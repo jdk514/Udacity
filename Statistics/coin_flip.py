@@ -16,21 +16,21 @@ class FlipPredictor(object):
         self.n=len(coins)
         self.probs=[1/self.n]*self.n
     def pheads(self):
-        return sum(self.probs)/self.n
+        return sum([x * y for x,y in zip(self.probs, self.coins)])
         #Write a function that returns 
         #the probability of the next flip being heads 
 
     def update(self,result):
         #Probability of result is average probability for that result
         if result == 'H':
-            pflip = sum(self.probs)/self.n
+            pflip = sum([x * y for x,y in zip(self.probs, self.coins)])
         else:
-            pflip = (self.n-sum(self.probs))/self.n
+            pflip = sum([x * (1.0 - y) for x,y in zip(self.probs, self.coins)])
         for coin in range(self.n):
             if result == 'H':
                 self.probs[coin] = (self.probs[coin] * self.coins[coin])/pflip
             else:
-                self.probs[coin] = ((1-self.probs[coin]) * self.coins[coin])/pflip
+                self.probs[coin] = (self.probs[coin] * (1 - self.coins[coin]))/pflip
         #Write a function the updates
         #the probabilities of flipping each coin
 
